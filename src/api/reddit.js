@@ -14,12 +14,12 @@ const getSubreddit = async (subedditName) => {
 
 const parseHotPostInfoFromData = (data) =>{
     let parse_data = [];
-    data = data.filter(element => element.data.stickied == false);   
+    data = data.filter(element => element.data.stickied === false);   
     data.forEach(function(elements,index){
         parse_data[index] = {id:elements.data.id, title: elements.data.title, score:elements.data.ups};
     })
 
-    if(parse_data.length == LIMIT)
+    if(parse_data.length === LIMIT)
     {
         return parse_data;
     }
