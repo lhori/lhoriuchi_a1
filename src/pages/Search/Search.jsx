@@ -27,7 +27,6 @@ const Search = () => {
         }
         else
         {
-            setAlertOpen(false);
             try{
                 const data = await getSubreddit(searchText);
                 const updateData = data.map((post) => ({ ...post, isFavourited: false }));
@@ -39,6 +38,7 @@ const Search = () => {
                     }
                 }
                 setRedditData(updateData);
+                setAlertOpen(false);
             } catch (error) {
                 console.error(error);
                 setAlertOpen(true);
