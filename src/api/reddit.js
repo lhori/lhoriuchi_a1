@@ -9,6 +9,7 @@ const getSubreddit = async (subedditName) => {
       return post_data;
     } catch (error) {
       console.log(error);
+      throw new Error("Failed to retrieve post data");
     }
   };
 
@@ -39,7 +40,6 @@ const getPostById = async(postId) =>{
 
 const parseFavPostInfoFromData = (postId, data) =>{
     let parse_data = {id:postId, title: data.title, score:data.ups};
-    console.log(parse_data);    
     return parse_data;
 };
 

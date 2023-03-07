@@ -91,7 +91,6 @@ const Favourites = () => {
         }
 
     }
-    console.log(savedPosts);
     return(
         <Grid item xs={8} sx={GridStyles}>
             <CommonCard content={getContent()}/>

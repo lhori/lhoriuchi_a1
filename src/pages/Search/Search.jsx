@@ -17,7 +17,6 @@ const Search = () => {
     const [redditData, setRedditData] = useState([]);
 
     const handleChange = (subedditName) =>{
-        console.log(subedditName);
         setSearchText(subedditName);
 
     };
@@ -29,20 +28,21 @@ const Search = () => {
         else
         {
             setAlertOpen(false);
-            console.log("search text: ", searchText);
-            const data = await getSubreddit(searchText);
-            const updateData = data.map((post) => ({ ...post, isFavourited: false }));
-            console.log(updateData);
-            const favouritePosts = Object.values(localStorage);
-            for(let i = 0; i< updateData.length; i++)
-            {
-                if(favouritePosts.includes(updateData[i].id)){
-                    updateData[i].isFavourited = true;
+            try{
+                const data = await getSubreddit(searchText);
+                const updateData = data.map((post) => ({ ...post, isFavourited: false }));
+                const favouritePosts = Object.values(localStorage);
+                for(let i = 0; i< updateData.length; i++)
+                {
+                    if(favouritePosts.includes(updateData[i].id)){
+                        updateData[i].isFavourited = true;
+                    }
                 }
-            }
-            setRedditData(updateData);
-            
-            
+                setRedditData(updateData);
+            } catch (error) {
+                console.error(error);
+                setAlertOpen(true);
+              }        
         }
     }
 
@@ -145,7 +145,7 @@ const Search = () => {
     return(
         <Grid item xs={8} sx={GridStyles}>
             <Alert severity="error" sx={{ display: alertOpen ? 'block' : 'none' }}>
-                Please enter a subreddit name to search.
+                Cannot find data....Please enter valid subreddit name to search.
             </Alert>
             <CommonCard header={getSearchBox()} content={getContent()}/>
             
