@@ -12,6 +12,7 @@ import Search from './pages/Search/Search';
 import Favourites from './pages/Favourites/Favourites';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+document.title = 'Reddit Search App';
 root.render(
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Routes>
