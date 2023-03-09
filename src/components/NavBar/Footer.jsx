@@ -1,5 +1,17 @@
+// File         : Footer.jsx
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 03/05/2023
+// Description  : This file contains the footer component
+
 import React from 'react'
 import { Container, Box, Typography, Grid } from '@mui/material';
+
+// Function   : NavBar
+// Description: This function will have Box setted as a footer and inside it,
+//              it will have the text of the website title and author name.
+// Parameters : None
+// Returns    : Components to display the footer
 const Footer = () => {
 
     return (

@@ -1,3 +1,9 @@
+// File         : styles.js
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 02/24/2023
+// Description  : This file contains the the styling for the pages.
+
 export const searchBoxStyles = {
     wrapper:{
       display: 'flex',

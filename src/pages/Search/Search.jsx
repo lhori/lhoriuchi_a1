@@ -1,3 +1,9 @@
+// File         : Search.jsx
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 02/24/2023
+// Description  : This file contains the search page component and functionality.
+
 import React, {useState} from 'react'
 import {Grid, Alert, Box, Typography, CardActions, IconButton} from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,69 +16,40 @@ import SearchBox from '../../common/SearchBox/SearchBox';
 import { searchBoxStyles, GridStyles } from '../styles'
 import { getSubreddit }  from '../../api/reddit';
 
-
+// Function   : Search
+// Description: This function is for handling the user input for the search bar, displaying alerts, button actions, and displaying the search result.
+// Parameters : None
+// Returns    : the components that will show search bar, search button, and card component with post information.
 const Search = () => {
     const [searchText, setSearchText] = useState('');
     const [alertOpen, setAlertOpen] = useState(false);
     const [redditData, setRedditData] = useState([]);
 
-    const handleChange = (subedditName) =>{
-        setSearchText(subedditName);
+    // Function   : handleChange
+    // Description: This function is for handling the user input inside the search bar text input.
+    //              It will set the inpputed words as a search text
+    // Parameters : subredditName - inputted string.
+    // Returns    : None
+    const handleChange = (subredditName) =>{
+        setSearchText(subredditName);
 
     };
 
-    const searchReddit = async () => {
-        if(!searchText){
-            setAlertOpen(true);
-        }
-        else
-        {
-            try{
-                const data = await getSubreddit(searchText);
-                const updateData = data.map((post) => ({ ...post, isFavourited: false }));
-                const favouritePosts = Object.values(localStorage);
-                for(let i = 0; i< updateData.length; i++)
-                {
-                    if(favouritePosts.includes(updateData[i].id)){
-                        updateData[i].isFavourited = true;
-                    }
-                }
-                setRedditData(updateData);
-                setAlertOpen(false);
-            } catch (error) {
-                console.error(error);
-                setAlertOpen(true);
-              }        
-        }
-    }
-
+    // Function   : handleKeyPress
+    // Description: This function is for handling user key input. It will start search when user press "Enter" key.
+    // Parameters : None
+    // Returns    : None
     const handleKeyPress = (e) =>{
         if(e.key === 'Enter'){
             searchReddit();
         }
     }
 
-    const getSearchBox = () =>{
-        return(
-            <Box sx={searchBoxStyles.wrapper}>
-                <SearchBox
-                    placeholder={"Search by name of the subreddit"}
-                    onChange = {(e) => handleChange(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    searchBarWidth='640px'
-                />
-                <CustomButtons
-                 variant="contained"
-                 onClick={searchReddit}
-                 size="large"
-                 sx={searchBoxStyles.addUserButton}
-                 >
-                    Search
-                </CustomButtons>
-            </Box>
-        )
-    }
-
+    // Function   : handleFavouriteClick
+    // Description: This function is for handling favourite icon. When the favourite icon is pressed, it will update the data and storage the post id.
+    //              When it is clicked again, it will unfavourite the posts and remove from the local storage.
+    // Parameters : postId - string post id of the post.
+    // Returns    : None
     const handleFavouriteClick = (postId) =>{
 
             //update data with favourite state
@@ -99,8 +76,67 @@ const Search = () => {
                 }
             }
     }
-    
 
+    // Function   : searchReddit
+    // Description: This function is for searching the keyword.
+    //              When it gets data back using reddit api, it will update the data and set that data.
+    //              If the search text is blank or any errors, it will set the Alert component to be shown.
+    // Parameters : None
+    // Returns    : None
+    const searchReddit = async () => {
+        if(!searchText){
+            setAlertOpen(true);
+        }
+        else
+        {
+            try{
+                const data = await getSubreddit(searchText);
+                const updateData = data.map((post) => ({ ...post, isFavourited: false }));
+                const favouritePosts = Object.values(localStorage);
+                for(let i = 0; i< updateData.length; i++)
+                {
+                    if(favouritePosts.includes(updateData[i].id)){
+                        updateData[i].isFavourited = true;
+                    }
+                }
+                setRedditData(updateData);
+                setAlertOpen(false);
+            } catch (error) {
+                console.error(error);
+                setAlertOpen(true);
+              }        
+        }
+    }
+
+    // Function   : getSearchBox
+    // Description: This function is for setting up and displaying the search box.
+    // Parameters : None
+    // Returns    : Components to render the search box.
+    const getSearchBox = () =>{
+        return(
+            <Box sx={searchBoxStyles.wrapper}>
+                <SearchBox
+                    placeholder={"Search by name of the subreddit"}
+                    onChange = {(e) => handleChange(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    searchBarWidth='640px'
+                />
+                <CustomButtons
+                 variant="contained"
+                 onClick={searchReddit}
+                 size="large"
+                 sx={searchBoxStyles.addUserButton}
+                 >
+                    Search
+                </CustomButtons>
+            </Box>
+        )
+    }
+
+    // Function   : getContent
+    // Description: This function is to display the post information with certain arrtibutes setted up.
+    // Parameters : None
+    // Returns    : card object that will contain the sorted top 10 posts with format.
     const getContent = () =>{
         if (!redditData) {
             return (

@@ -1,3 +1,9 @@
+// File         : NavBarItems.jsx
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 02/24/2023
+// Description  : This file contains the constants of navigation bar menu items.
+
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
 import HomeIcon from '@mui/icons-material/Home';

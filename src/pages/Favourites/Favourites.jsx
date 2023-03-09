@@ -1,3 +1,8 @@
+// File         : Favourites.jsx
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 02/24/2023
+// Description  : This file contains the favourite page component and functionality.
 import React, { useEffect, useState } from 'react'
 
 import {Grid, Typography, CardActions, IconButton} from '@mui/material';
@@ -9,6 +14,10 @@ import { GridStyles } from '../styles'
 import CommonCard from '../../common/Card/Card';
 import { getPostById } from '../../api/reddit';
 
+// Function   : getSavedPosts
+// Description: This function is getting the favourited post from the Web Storage API
+// Parameters : None
+// Returns    : None
 const getSavedPosts = () => {
     const keys = Object.keys(localStorage);
     const postIds = [];
@@ -23,11 +32,20 @@ const getSavedPosts = () => {
     return postIds;
 }
 
+// Function   : Favourites
+// Description: This function includes the logic to get the favourited posts info from the web storage, card display and button control.
+//              This page will mostly contains card component.
+// Parameters : None
+// Returns    : Favourite page component
 const Favourites = () => {
     const [savedPosts, setSavedPosts] = useState([]);
 
     useEffect(()=>{
-
+        
+        // Function   : getSavedPostInfo
+        // Description: This function is get the favourited post's information and save that data
+        // Parameters : None
+        // Returns    : None
         const getSavedPostInfo = async () => {
             const postIds = getSavedPosts();
             const postInfo = await Promise.all(postIds.map((postId)=>getPostById(postId)))
@@ -36,6 +54,10 @@ const Favourites = () => {
         getSavedPostInfo()
     }, [])
 
+    // Function   : removePostFromFavourites
+    // Description: This function is to remove the post from favourites list. (local storage)
+    // Parameters : postId - id of the post
+    // Returns    : None
     const removePostFromFavourites = (postId) =>{
         const keys = Object.keys(localStorage);
         for(let i = 0; i <keys.length; i++){
@@ -49,6 +71,10 @@ const Favourites = () => {
 
     }
 
+    // Function   : getContent
+    // Description: This function is to display the favourited post information with certain arrtibutes setted up.
+    // Parameters : None
+    // Returns    : card objects that will contain the favourite posts with format.
     const getContent = () =>{
         if (savedPosts.length === 0 || !savedPosts || savedPosts[0] === undefined) {
             return (

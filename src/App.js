@@ -1,3 +1,9 @@
+// File         : App.js
+// Project      : Frontend Programming Assignment
+// Programmer   : Luka Horiuchi
+// First Version: 02/24/2023
+// Description  : This file contains the top/base page of this application.
+
 import React from "react";
 import {Link, Outlet, useLocation} from "react-router-dom";
 import { Grid, Container, Typography } from "@mui/material";
@@ -5,7 +11,11 @@ import NavBar from "./components/NavBar/NavBar";
 import CustomButtons from "./common/Button/CustomButtons";
 import Footer from "./components/NavBar/Footer";
 
-
+// Function   : App
+// Description: This function will display the base page of the application. 
+//              Depending on the page location, the welcome page and buttons will not be shown.
+// Parameters : None
+// Returns    : the components that will show navigation bar, footer, and welcome page texts with button.
 function App() {
   const location = useLocation();
 
